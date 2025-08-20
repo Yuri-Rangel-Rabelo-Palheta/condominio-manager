@@ -1,54 +1,53 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import FeatureCard from "@/components/FeatureCard";
+import Navbar from "../components/Navbar";
+import Hero from "../components/Hero";
+import FeatureCard from "../components/FeatureCard";
+import Footer from "../components/Footer";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Navbar */}
       <Navbar />
 
-      {/* Hero */}
-      <section className="flex flex-col items-center justify-center text-center py-16 px-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">
-          Sistema de Gerenciamento de Condomínio
-        </h1>
-        <p className="max-w-2xl text-lg md:text-xl mb-6">
-          Pague seus boletos, acompanhe comunicados e facilite a gestão do seu
-          condomínio em um só lugar.
-        </p>
-        <a
-          href="/auth/login"
-          className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition"
-        >
-          Acessar Conta
-        </a>
-      </section>
+      {/* Hero Section */}
+      <Hero />
 
-      {/* Features */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 p-10 flex-grow">
+      {/* Feature Cards */}
+      <section className="max-w-6xl mx-auto py-16 px-6 grid md:grid-cols-3 gap-8">
         <FeatureCard
-          title="Pagamento de Boletos"
-          description="Pague seu condomínio online de forma rápida e segura pelo Stripe."
+          title="Pagamentos Online"
+          description="Pague seus boletos de forma rápida e segura com Stripe."
           icon="💳"
         />
         <FeatureCard
-          title="Comunicados"
-          description="Receba avisos e comunicados do síndico diretamente na plataforma."
-          icon="📢"
+          title="Gestão de Condomínio"
+          description="O síndico gerencia comunicados, pagamentos e relatórios em um só lugar."
+          icon="🏢"
         />
         <FeatureCard
-          title="Gestão de Usuários"
-          description="Controle de moradores, síndicos e administradores em um só lugar."
+          title="Administração Completa"
+          description="O administrador acompanha usuários, finanças e acessos ao sistema."
           icon="👥"
         />
       </section>
 
+      {/* Call to Action */}
+      <section className="text-center py-12 bg-blue-600 text-white">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          Tudo em um único sistema
+        </h2>
+        <p className="mb-6">
+          Experimente agora e facilite a vida no seu condomínio.
+        </p>
+        <button className="px-8 py-3 bg-green-500 hover:bg-green-600 rounded-lg font-semibold transition">
+          Criar Conta
+        </button>
+      </section>
+
       {/* Footer */}
-      <footer className="text-center py-6 bg-gray-100 border-t">
-        <p className="text-gray-600">© {new Date().getFullYear()} - Condominio Manager</p>
-      </footer>
+      <Footer />
     </div>
   );
 }
