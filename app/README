@@ -1,0 +1,43 @@
+/condominio-manager
+│── app/
+│   ├── layout.tsx
+│   ├── page.tsx               # Home
+│   ├── login/
+│   │   └── page.tsx           # Login
+│   ├── cadastro/
+│   │   └── page.tsx           # Cadastro
+│   ├── dashboard/
+│   │   ├── page.tsx           # Painel principal
+│   │   ├── morador/
+│   │   │   └── page.tsx
+│   │   ├── sindico/
+│   │   │   └── page.tsx
+│   │   └── admin/
+│   │       └── page.tsx
+│
+│── lib/
+│   ├── firebase.ts            # Conexão Firebase
+│   ├── stripe.ts              # Conexão Stripe
+│
+│── models/                    # Modelos (Firestore)
+│   ├── User.ts
+│   ├── Boleto.ts
+│   └── Pagamento.ts
+│
+│── controllers/               # Controllers (lógica)
+│   ├── userController.ts
+│   ├── boletoController.ts
+│   └── pagamentoController.ts
+│
+│── components/                # Views reutilizáveis
+│   ├── Navbar.tsx
+│   ├── Sidebar.tsx
+│   └── BoletoCard.tsx
+│
+│── styles/
+│   └── globals.css
+│
+│── .env.local                 # Firebase + Stripe keys
+│── package.json
+│── next.config.mjs
+│── tailwind.config.ts
