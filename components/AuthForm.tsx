@@ -16,7 +16,7 @@ export default function AuthForm() {
     setErro("");
     try {
       await signInWithEmailAndPassword(auth, email, senha);
-      router.push("/dashboard"); // redireciona após login
+      router.push("/dashboard/sindico"); // redireciona após login
     } catch (error: any) {
       setErro("Email ou senha inválidos. Tente novamente.");
     }
