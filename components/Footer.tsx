@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
-    <footer className="bg-blue-600 text-white py-6 text-center">
-      <p>© {new Date().getFullYear()} Condomínio Manager. Todos os direitos reservados.</p>
+    <footer className="bg-gray-100 px-4 py-3 text-center text-sm text-gray-600 shadow-inner dark:bg-gray-800 dark:text-gray-400">
+      © {new Date().getFullYear()} Condomínio Manager. Todos os direitos reservados.
     </footer>
   );
 }
