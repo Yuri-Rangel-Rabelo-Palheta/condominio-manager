@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 export function middleware(req: NextRequest) {
   const role = req.cookies.get("role")?.value || "morador";
 
-  const adminPaths = ["/compras", "/estoque"];
+  const adminPaths = ["/compras", "/estoque","/financas", "/moradores", "/prestadores", "/relatorios"];
   const sindicoPaths = ["/financas", "/moradores", "/prestadores", "/relatorios"];
 
   const url = req.nextUrl.clone();
