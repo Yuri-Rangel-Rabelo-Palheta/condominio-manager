@@ -3,7 +3,7 @@ import LayoutApp from "@/components/LayoutApp";
 export default function DashboardMorador() {
 
    // papel do usuário logado (isso virá do Firebase Auth)
-    const role = "admin"; 
+    const role = "morador"; 
   
     return (
       <LayoutApp role={role}>
