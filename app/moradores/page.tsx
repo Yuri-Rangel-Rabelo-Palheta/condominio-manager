@@ -179,12 +179,23 @@ export default function MoradoresPage() {
     );
   }
 
-  const handleAddMorador = async (morador: Omit<Morador, "id">) => {
+  const handleAddMorador = async (formData: Omit<Morador, "id" | "status" | "userId">) => {
     try {
-      await MoradorController.add({ user }, morador);
+      // aqui você chamaria a função de cadastro no Firebase Auth para criar o user
+      // const cred = await createUserWithEmailAndPassword(auth, formData.email, senha);
+      // Para teste, vamos gerar um UID fictício
+      const fakeUid = "uid_" + new Date().getTime();
+
+      const novoMorador: Morador = {
+        ...formData,
+        userId: fakeUid, // ✅ Define o UID do usuário
+        status: "ativo", // ✅ Define o status
+      };
+
+      await MoradorController.add({ user }, novoMorador);
       const updated = await MoradorController.list({ user });
       setMoradores(updated);
-      setShowForm(false); // esconde o form depois de adicionar
+      setShowForm(false);
     } catch (err: any) {
       setError(err.message);
     }

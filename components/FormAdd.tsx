@@ -3,8 +3,13 @@
 import { useState } from "react";
 import { Morador } from "@/models/Morador";
 
-export default function FormAdd({ onSubmit }: { onSubmit: (morador: Morador) => void }) {
-  const [form, setForm] = useState<Omit<Morador, "id" | "status">>({
+// Mudança: o onSubmit não precisa de 'userId' nem 'status', só os campos do formulário
+export default function FormAdd({
+  onSubmit,
+}: {
+  onSubmit: (morador: Omit<Morador, "id" | "status">) => void;
+}) {
+  const [form, setForm] = useState<Omit<Morador, "id" | "status" | "userId">>({
     nome: "",
     email: "",
     telefone: "",
@@ -19,7 +24,7 @@ export default function FormAdd({ onSubmit }: { onSubmit: (morador: Morador) => 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ ...form, status: "ativo" });
+    onSubmit(form); // ❌ Não incluímos userId nem status aqui
     setForm({ nome: "", email: "", telefone: "", bloco: "", apartamento: "" });
   };
 
