@@ -2,7 +2,7 @@ import LayoutApp from "@/components/LayoutApp";
 
 export default function DashboardSindico() {
   // papel do usuário logado (isso virá do Firebase Auth)
-  const role = "sindico";
+  const role = "admin" ;//"sindico";
 
   return (
     <LayoutApp role={role}>

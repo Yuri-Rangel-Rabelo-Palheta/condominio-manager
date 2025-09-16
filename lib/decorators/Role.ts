@@ -1,4 +1,4 @@
-export function Role(requiredRole: "admin" | "sindico" | "morador") {
+export function Role(requiredRoles: Array<"admin" | "sindico" | "morador">) {
   return function (
     target: any,
     propertyKey: string,
@@ -10,8 +10,10 @@ export function Role(requiredRole: "admin" | "sindico" | "morador") {
       const context = args[0]; // assumimos que sempre passamos { user, ... } para o controller
       const user = context?.user;
 
-      if (!user || user.role !== requiredRole) {
-        throw new Error(`Acesso negado: apenas ${requiredRole} pode executar este método`);
+      if (!user || !requiredRoles.includes(user.role)) {
+        throw new Error(
+          `Acesso negado: apenas ${requiredRoles.join(", ")} podem executar este método`
+        );
       }
 
       return await originalMethod.apply(this, args);

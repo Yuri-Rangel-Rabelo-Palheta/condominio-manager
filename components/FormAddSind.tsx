@@ -1,15 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { Morador } from "@/models/Morador";
 
-export default function FormAdd({ onSubmit }: { onSubmit: (morador: Morador) => void }) {
-  const [form, setForm] = useState<Omit<Morador, "id" | "status">>({
+export interface SindicoForm {
+  nome: string;
+  email: string;
+  telefone: string;
+  bloco: string;
+}
+
+interface FormAddSindProps {
+  onSubmit: (sindico: SindicoForm) => void;
+}
+
+export default function FormAddSind({ onSubmit }: FormAddSindProps) {
+  const [form, setForm] = useState<SindicoForm>({
     nome: "",
     email: "",
     telefone: "",
     bloco: "",
-    apartamento: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,12 +28,12 @@ export default function FormAdd({ onSubmit }: { onSubmit: (morador: Morador) => 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ ...form, status: "ativo" });
-    setForm({ nome: "", email: "", telefone: "", bloco: "", apartamento: "" });
+    onSubmit(form);
+    setForm({ nome: "", email: "", telefone: "", bloco: "" });
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4 p-4 bg-white rounded shadow-md">
       <input
         name="nome"
         placeholder="Nome"
@@ -58,20 +67,12 @@ export default function FormAdd({ onSubmit }: { onSubmit: (morador: Morador) => 
         className="w-full border p-2 rounded"
         required
       />
-      <input
-        name="apartamento"
-        placeholder="Apartamento"
-        value={form.apartamento}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-        required
-      />
 
       <button
         type="submit"
-        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
-        Adicionar
+        Adicionar Síndico
       </button>
     </form>
   );

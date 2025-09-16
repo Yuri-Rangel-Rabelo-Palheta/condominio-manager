@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
-  const role = req.cookies.get("role")?.value || "morador";
+  const role = req.cookies.get("role")?.value || "admin";
 
-  const adminPaths = ["/compras", "/estoque","/financas", "/moradores", "/prestadores", "/relatorios"];
-  const sindicoPaths = ["/financas", "/moradores", "/prestadores", "/relatorios"];
+  const adminPaths = ["/compras", "/estoque","/financas", "/moradores", "/prestadores", "/relatorios","/testeadd"];
+  const sindicoPaths = ["/financas", "/moradores", "/prestadores", "/relatorios","/testeadd", "/moradores"];
 
   const url = req.nextUrl.clone();
 
