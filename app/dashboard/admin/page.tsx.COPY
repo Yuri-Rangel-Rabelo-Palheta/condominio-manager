@@ -1,55 +1,10 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { auth, db } from "@/lib/firebase"; // seu arquivo de config do firebase
-import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
 import LayoutApp from "@/components/LayoutApp";
 
 export default function DashboardAdmin() {
-  const [role, setRole] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  // papel do usuário logado (isso virá do Firebase Auth)
+  const role = "admin";
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        router.push("/login"); // redireciona se não estiver logado
-        return;
-      }
-
-      try {
-        // verifica se é síndico
-        const sindicoRef = doc(db, "sindicos", user.uid);
-        const sindicoSnap = await getDoc(sindicoRef);
-
-        if (sindicoSnap.exists()) {
-          setRole("sindico");
-        } else {
-          router.push("/login"); // redireciona se não for sindico
-        }
-      } catch (error) {
-        console.error("Erro ao buscar role do usuário:", error);
-        router.push("/login");
-      } finally {
-        setLoading(false);
-      }
-    });
-
-    return () => unsubscribe();
-  }, [router]);
-
-  if (loading) {
-    return <p className="p-8 text-black">Carregando...</p>;
-  }
-
-  if (role !== "admin") {
-    return <p className="p-8 text-red-600">Acesso negado.</p>;
-  }
-
-
- return (
+  return (
     <LayoutApp role={role}>
       <main className="min-h-screen bg-gray-500 p-8">
         <h1 className="text-3xl font-bold mb-4 text-black">Dashboard - Administrador</h1>

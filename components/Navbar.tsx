@@ -1,6 +1,7 @@
 "use client";
 
 import { Menu } from "lucide-react";
+import LogoutButton from "./Logout";
 
 export default function Navbar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
   return (
@@ -20,6 +21,7 @@ export default function Navbar({ onToggleSidebar }: { onToggleSidebar: () => voi
           className="h-8 w-8 rounded-full border border-gray-300 dark:border-gray-600"
         />
       </div>
+      <LogoutButton />
     </nav>
   );
 }

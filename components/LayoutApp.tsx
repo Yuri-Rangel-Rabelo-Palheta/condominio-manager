@@ -47,7 +47,7 @@ export default function LayoutApp({
   role?: Role;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  console.log(role);
   return (
     <div className="flex h-screen flex-col bg-gray-50 dark:bg-gray-900">
       <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />

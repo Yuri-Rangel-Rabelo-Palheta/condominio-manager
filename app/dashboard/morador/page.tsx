@@ -1,10 +1,53 @@
-import LayoutApp from "@/components/LayoutApp";
+"use client";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { auth, db } from "@/lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import LayoutApp from "@/components/LayoutApp";
 export default function DashboardMorador() {
 
-   // papel do usuário logado (isso virá do Firebase Auth)
-    const role = "morador"; 
-  
+  const [role, setRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        router.push("/login"); // redireciona se não estiver logado
+        return;
+      }
+
+      try {
+        // verifica se é síndico
+        const sindicoRef = doc(db, "moradores", user.uid);
+        const sindicoSnap = await getDoc(sindicoRef);
+
+        if (sindicoSnap.exists()) {
+          setRole("morador");
+        } else {
+          router.push("/login"); // redireciona se não for sindico
+        }
+      } catch (error) {
+        console.error("Erro ao buscar role do usuário:", error);
+        router.push("/login");
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [router]);
+
+  if (loading) {
+    return <p className="p-8 text-black">Carregando...</p>;
+  }
+
+  if (role !== "morador") {
+    return <p className="p-8 text-red-600">Acesso negado.</p>;
+  }
+
     return (
       <LayoutApp role={role}>
         <main className="min-h-screen bg-gray-500 p-8">

@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { auth } from "@/lib/firebase";
 import { Loader2 } from "lucide-react";
 
 export default function AuthForm() {
@@ -18,31 +17,9 @@ export default function AuthForm() {
     e.preventDefault();
     setErro("");
     setLoading(true);
-
     try {
-      const cred = await signInWithEmailAndPassword(auth, email, senha);
-      const uid = cred.user.uid;
-
-      // Primeiro, verifica se é síndico
-      const sindicoRef = doc(db, "sindicos", uid);
-      const sindicoSnap = await getDoc(sindicoRef);
-
-      if (sindicoSnap.exists()) {
-        router.push("/dashboard/sindico");
-        return;
-      }
-
-      // Se não for síndico, verifica se é morador
-      const moradorRef = doc(db, "moradores", uid);
-      const moradorSnap = await getDoc(moradorRef);
-
-      if (moradorSnap.exists()) {
-        router.push("/dashboard/morador");
-        return;
-      }
-
-      // Se não achar em nenhuma coleção
-      setErro("Usuário não encontrado em moradores ou síndicos.");
+      await signInWithEmailAndPassword(auth, email, senha);
+      router.push("/dashboard/sindico");
     } catch (error: any) {
       if (error.code === "auth/user-not-found") {
         setErro("Usuário não encontrado.");
@@ -65,6 +42,7 @@ export default function AuthForm() {
         </label>
         <input
           type="email"
+          aria-label="Digite seu email"
           className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition"
           placeholder="exemplo@email.com"
           value={email}
@@ -80,6 +58,7 @@ export default function AuthForm() {
         </label>
         <input
           type="password"
+          aria-label="Digite sua senha"
           className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition"
           placeholder="********"
           value={senha}
@@ -116,3 +95,4 @@ export default function AuthForm() {
     </form>
   );
 }
+
