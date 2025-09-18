@@ -22,6 +22,9 @@ export default function AuthForm() {
     try {
       const cred = await signInWithEmailAndPassword(auth, email, senha);
       const uid = cred.user.uid;
+      const token = await cred.user.getIdToken();
+
+      document.cookie = `token=${token}; path=/; Secure; SameSite=Strict; HttpOnly`;
 
       // Primeiro, verifica se é síndico
       const sindicoRef = doc(db, "sindicos", uid);
